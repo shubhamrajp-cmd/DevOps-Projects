@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Build the Docker image
-        working-directory: ./DevOps-Project-04
+        working-directory: ./DevOps-Project-05
         run: docker build . --file Dockerfile --tag my-image-name:${{ github.sha }}
 
       - name: Show the built image

@@ -54,7 +54,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: ./DevOps-Project-05
-          file: ./DevOps-Project-05/Dockerfile
+          file: ./DevOps-Project-05/hello-world/Dockerfile
           push: true
           tags: srajput2403/devops-project:latest
 
@@ -71,7 +71,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: ./DevOps-Project-05
-          file: ./DevOps-Project-05/Dockerfile
+          file: ./DevOps-Project-05/hello-world/Dockerfile
           push: true
           tags: srajput2403/devops-project:latest
 

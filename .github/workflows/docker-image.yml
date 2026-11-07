@@ -5,7 +5,7 @@ on:
     paths:
       - 'DevOps-Project-04/**'
   pull_request:
-    branches: [ "main" ]
+    branches: [ "master" ]
     paths:
       - 'DevOps-Project-04/**'
 jobs:

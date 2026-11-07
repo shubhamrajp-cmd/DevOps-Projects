@@ -1,8 +1,3 @@
-      - name: Debug file list
-        run: |
-          pwd
-          ls -la
-          find . -iname "*dockerfile*" -not -path "./.git/*"
 name: Docker Image CI
 
 on:
@@ -15,6 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Debug file list
+        run: |
+          pwd
+          ls -la
+          find . -iname "*dockerfile*" -not -path "./.git/*"
 
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag my-image-name:${{ github.sha }}

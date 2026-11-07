@@ -69,8 +69,7 @@ COPY --chown=django:django . .
 RUN mkdir -p /usr/src/app/static /usr/src/app/media /usr/src/app/logs \
     && chown -R django:django /usr/src/app
 
-# 4. RUN COLLECTSTATIC HERE (While still running as root user)
-RUN DATABASE_URL=sqlite:///:memory: SECRET_KEY=build-time-dummy-key ALLOWED_HOSTS=* python manage.py collectstatic --noinput --clear
+
 
 # 5. NOW switch to non-root user for production execution safely
 USER django

@@ -4,11 +4,11 @@ on:
   push:
     branches: [ "master" ]
     paths:
-      - 'DevOps-Project-04/**'
+      - 'DevOps-Project-05/**'
   pull_request:
     branches: [ "master" ]
     paths:
-      - 'DevOps-Project-04/**'
+      - 'DevOps-Project-05/**'
 
 jobs:
   code:
@@ -33,7 +33,7 @@ jobs:
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v6
         with:
-          context: ./DevOps-Project-04
+          context: ./DevOps-Project-05
           file: ./DevOps-Project-04/Dockerfile
           push: true
           tags: srajput2403/devops-project:latest

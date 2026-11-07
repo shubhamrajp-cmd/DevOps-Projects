@@ -68,6 +68,8 @@ COPY --chown=django:django . .
 # Create necessary directories and set permissions
 RUN mkdir -p /usr/src/app/static /usr/src/app/media /usr/src/app/logs \
     && chown -R django:django /usr/src/app
+# Prepend dummy variables for the build phase safely
+RUN DATABASE_URL=sqlite:///:memory: SECRET_KEY=build-time-dummy-key ALLOWED_HOSTS=* python manage.py collectstatic --noinput --clear
 
 # Switch to non-root user
 USER django

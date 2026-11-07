@@ -11,13 +11,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Debug file list
-        run: |
-          pwd
-          ls -la
-          find . -iname "*dockerfile*" -not -path "./.git/*"
-
       - name: Build the Docker image
+        working-directory: ./DevOps-Project-04
         run: docker build . --file Dockerfile --tag my-image-name:${{ github.sha }}
 
       - name: Show the built image

@@ -1,4 +1,5 @@
 name: CI
+
 on:
   push:
     branches: [ "master" ]
@@ -13,18 +14,27 @@ jobs:
   code:
     runs-on: ubuntu-latest
     steps:
+      # 1. Checkout the repository code
       - name: checkout code
-        uses: actions/checkout@v7
+        uses: actions/checkout@v4
 
+      # 2. Set up Docker Buildx (Mandatory for build-push-action to work)
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # 3. Log in to Docker Hub using your verified variable and secret
       - name: Docker setup
-        uses: docker/login-action@v4
+        uses: docker/login-action@v3
         with: 
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # 4. Build and Push the image
       - name: Build and Push Docker Image
-        uses: docker/build-push-action@v7
+        uses: docker/build-push-action@v6
         with:
           context: ./DevOps-Project-04
           file: ./DevOps-Project-04/Dockerfile
-          push: true # Only push on actual master branch commits
+          push: true
           tags: ${{ vars.DOCKERHUB_USERNAME }}/devops-project:latest
+

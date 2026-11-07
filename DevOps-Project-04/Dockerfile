@@ -59,20 +59,26 @@ RUN groupadd -r django && useradd -r -g django django
 # Copy virtual environment from builder stage
 COPY --from=builder /opt/venv /opt/venv
 
-# Set working directory
+# 1. Keep working directory context
 WORKDIR /usr/src/app
 
-# Copy application code with proper ownership
+# 2. Copy application code with proper ownership
 COPY --chown=django:django . .
 
-# Create necessary directories and set permissions
+# 3. Create directories and fix permissions while still running as ROOT
 RUN mkdir -p /usr/src/app/static /usr/src/app/media /usr/src/app/logs \
     && chown -R django:django /usr/src/app
 
+# 4. RUN COLLECTSTATIC HERE (While still running as root user)
+RUN DATABASE_URL=sqlite:///:memory: SECRET_KEY=build-time-dummy-key ALLOWED_HOSTS=* python manage.py collectstatic --noinput --clear
 
-
-# Switch to non-root user
+# 5. NOW switch to non-root user for production execution safely
 USER django
+
+# Health check for container orchestration
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+    CMD curl -f http://localhost:8000/health/ || exit 1
+
 
 # Force Django to use core base configuration settings to bypass production errors during build
 RUN DJANGO_SETTINGS_MODULE= django.conf.global_settings python manage.py collectstatic --noinput --clear || python manage.py collectstatic --noinput --clear --settings=myproject.settings

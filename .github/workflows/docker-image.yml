@@ -1,3 +1,8 @@
+      - name: Debug file list
+        run: |
+          pwd
+          ls -la
+          find . -iname "*dockerfile*" -not -path "./.git/*"
 name: Docker Image CI
 
 on:

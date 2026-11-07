@@ -36,5 +36,5 @@ jobs:
           context: ./DevOps-Project-04
           file: ./DevOps-Project-04/Dockerfile
           push: true
-          tags: ${{ vars.DOCKERHUB_USERNAME }}/devops-project:latest
+          tags: srajput2403/devops-project:latest
 

@@ -1,5 +1,5 @@
 # =============================================================================
-# Triggered
+# Triggeredg
 # Django Application Dockerfile
 # =============================================================================
 # This Dockerfile creates a production-ready container for Django applications

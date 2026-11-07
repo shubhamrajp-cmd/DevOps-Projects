@@ -21,4 +21,10 @@ jobs:
         with: 
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v7
+        with:
+          context: ./DevOps-Project-04
+          file: ./DevOps-Project-04/Dockerfile
+          push: ${{ github.event_name != 'pull_request' }} # Only push on actual master branch commits
+          tags: ${{ vars.DOCKERHUB_USERNAME }}/devops-project-04:latest

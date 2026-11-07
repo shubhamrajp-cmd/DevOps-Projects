@@ -68,14 +68,15 @@ COPY --chown=django:django . .
 # Create necessary directories and set permissions
 RUN mkdir -p /usr/src/app/static /usr/src/app/media /usr/src/app/logs \
     && chown -R django:django /usr/src/app
-# Prepend dummy variables for the build phase safely
-RUN DATABASE_URL=sqlite:///:memory: SECRET_KEY=build-time-dummy-key ALLOWED_HOSTS=* python manage.py collectstatic --noinput --clear
+
+
 
 # Switch to non-root user
 USER django
 
-# Collect static files
-RUN python manage.py collectstatic --noinput --clear
+# Force Django to use core base configuration settings to bypass production errors during build
+RUN DJANGO_SETTINGS_MODULE= django.conf.global_settings python manage.py collectstatic --noinput --clear || python manage.py collectstatic --noinput --clear --settings=myproject.settings
+
 
 # Health check for container orchestration
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \

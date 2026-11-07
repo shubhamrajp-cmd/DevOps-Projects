@@ -1,2 +1,0 @@
-- name: Check for the jar
-  run: find . -name "demo-workshop*.jar" -not -path "./.git/*"

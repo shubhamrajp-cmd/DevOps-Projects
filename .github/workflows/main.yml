@@ -84,6 +84,6 @@ jobs:
             docker pull srajput2403/devops-project:latest
             docker stop myapp || true
             docker rm myapp || true
-            docker run -d --name myapp -p 80:8080 --restart unless-stopped tags: srajput2403/devops-project:latest
+            docker run -d --name myapp -p 80:8080 --restart unless-stopped srajput2403/devops-project:latest
           
 

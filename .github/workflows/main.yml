@@ -74,4 +74,16 @@ jobs:
           file: ./DevOps-Project-05/hello-world/Dockerfile
           push: true
           tags: srajput2403/devops-project:latest
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ec2-user
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            docker pull srajput2403/devops-project:latest
+            docker stop myapp || true
+            docker rm myapp || true
+            docker run -d --name myapp -p 80:8080 --restart unless-stopped tags: srajput2403/devops-project:latest
+          
 

@@ -1,4 +1,4 @@
-# Use a specific, stable version instead of latest88
+# Use a specific, stable version instead of latest880
 FROM tomcat:9.0-jdk11-corretto
 
 # Copy pre-configured webapps layout securely
